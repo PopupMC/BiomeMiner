@@ -3,4 +3,11 @@ version: 1.0
 main: com.popupmc.biomeminer.BiomeMiner
 description: Biome Miner
 author: junebug12851
-api-version: 1.15
+api-version: 1.16
+
+commands:
+  biomeminer:
+    permission: biomeminer.use
+    permission-message: You don't have permission to perform this action
+    description: Access Biome Miner Custom Enchants
+    usage: /biomeminer

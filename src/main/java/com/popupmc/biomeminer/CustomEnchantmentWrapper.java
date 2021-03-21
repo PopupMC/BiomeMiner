@@ -1,5 +1,6 @@
 package com.popupmc.biomeminer;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -7,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public abstract class CustomEnchantmentWrapper extends Enchantment {
     public CustomEnchantmentWrapper(String namespace, BiomeMiner plugin) {
@@ -30,8 +33,19 @@ public abstract class CustomEnchantmentWrapper extends Enchantment {
     }
 
     @Override
+    public @NotNull Component displayName(int i) {
+
+        String displayName = convertToTitleCaseSplitting(namespace.toLowerCase().replaceAll("_", " "));
+
+        if(i > getMaxLevel() || i < getStartLevel())
+            return Component.text(displayName);
+
+        return Component.text(displayName + " " + i);
+    }
+
+    @Override
     public int getStartLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -67,7 +81,23 @@ public abstract class CustomEnchantmentWrapper extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 1;
+    }
+
+    // Convert words with spaces to words with the first letter in each word capitalized
+    public static String convertToTitleCaseSplitting(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+
+        return Arrays
+                .stream(text.split(" "))
+                .map(word -> word.isEmpty()
+                        ? word
+                        : Character.toTitleCase(word.charAt(0)) + word
+                        .substring(1)
+                        .toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 
     public final String namespace;

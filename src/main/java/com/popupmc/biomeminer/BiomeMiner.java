@@ -3,6 +3,8 @@ package com.popupmc.biomeminer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class BiomeMiner extends JavaPlugin {
     @Override
     public void onEnable() {
@@ -23,6 +25,9 @@ public class BiomeMiner extends JavaPlugin {
         // Register events
         Bukkit.getPluginManager().registerEvents(new OnBlockBreakEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new OnBlockPlaceEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new OnNewVillagerTrade(this), this);
+
+        Objects.requireNonNull(this.getCommand("biomeminer")).setExecutor(new OnCommand(this));
 
         getLogger().info("BiomeMiner is enabled.");
     }

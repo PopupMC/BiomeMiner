@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BiomeMinerEnchant extends CustomEnchantmentWrapper {
     public BiomeMinerEnchant(BiomeMiner plugin) {
-        super("BiomeMiner", plugin);
+        super("Biome_Miner", plugin);
     }
 
     @Override
